@@ -1,0 +1,34 @@
+import java.nio.file.Path
+import java.nio.file.Files
+
+sourceSets.main.java.srcDirs = ['src/main']
+sourceSets.test.java.srcDirs = ['src/test']
+
+configurations {
+    testAnnotationProcessor
+}
+
+dependencies {
+    compile project(':annotation')
+    testCompile 'org.testng:testng:6.8.+'
+    testCompile 'org.mockito:mockito-core:1.9.+'
+    testAnnotationProcessor project(':processor')
+}
+
+compileTestJava {
+    Path generatedSourcesDir = buildDir.toPath().resolve('generated-sources/test')
+
+    dependsOn configurations.testAnnotationProcessor
+    options.compilerArgs += ['-processorpath', configurations.testAnnotationProcessor.join(System.getProperty('path.separator'))]
+    options.compilerArgs += ['-s', generatedSourcesDir.toString()]
+
+    doFirst {
+        Files.createDirectories(generatedSourcesDir)
+    }
+}
+
+test {
+    useTestNG {
+        suites 'src/testng.xml'
+    }
+}

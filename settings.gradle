@@ -1,0 +1,6 @@
+rootProject.name = 'logging'
+
+include 'annotation'
+include 'processor'
+include 'runtime'
+include 'example'

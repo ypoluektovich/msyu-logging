@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="logging" verbose="1">
+    <test name="return values">
+        <classes>
+            <class name="org.msyu.logging.ReturnValuesTest"/>
+        </classes>
+    </test>
+    <test name="PreserveParameterNames annotation handling">
+        <classes>
+            <class name="org.msyu.logging.ParameterPreservationTest"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,25 @@
+import java.nio.file.Path
+import java.nio.file.Files
+
+sourceSets.main.java.srcDirs = ['src']
+
+configurations {
+    annotationProcessor
+}
+
+dependencies {
+    compile project(':runtime')
+    annotationProcessor project(':processor')
+}
+
+compileJava {
+    Path generatedSourcesDir = buildDir.toPath().resolve('generated-sources/main')
+
+    dependsOn configurations.annotationProcessor
+    options.compilerArgs += ['-processorpath', configurations.annotationProcessor.join(System.getProperty('path.separator'))]
+    options.compilerArgs += ['-s', generatedSourcesDir.toString()]
+
+    doFirst {
+        Files.createDirectories(generatedSourcesDir)
+    }
+}

@@ -1,0 +1,6 @@
+sourceSets.main.java.srcDirs = ['src/java']
+sourceSets.main.resources.srcDirs = ['src/resources']
+
+dependencies {
+    compile project(':annotation')
+}
