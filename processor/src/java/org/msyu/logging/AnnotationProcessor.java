@@ -68,7 +68,6 @@ public class AnnotationProcessor extends AbstractProcessor {
 	}
 
 	private void processPreserveAnnotation(Element annotatedElement) {
-		messager.printMessage(Diagnostic.Kind.NOTE, "processing " + annotatedElement);
 		TypeElement annotatedInterface = (TypeElement) annotatedElement;
 		String className = eltUtils.getBinaryName(annotatedInterface) + PreserveParameterNames.PARAMETER_NAME_HOLDER_SUFFIX;
 
