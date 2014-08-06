@@ -6,10 +6,6 @@ import org.msyu.logging.SystemOutLogBackend;
 
 public class Main {
 
-	private static interface Desu {
-		public static final String[] desu = {};
-	}
-
 	@PreserveParameterNames
 	private static interface Log {
 		void outerStart(int count);
