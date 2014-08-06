@@ -1,1 +1,49 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
+    }
+}
+
+version = '0.1.0'
+
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
 sourceSets.main.java.srcDirs = ['src']
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        main(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier 'sources'
+            }
+
+            artifactId = 'msyu-logging-' + project.name
+        }
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayKey
+    publications = ['main']
+    pkg {
+        userOrg = 'ypoluektovich'
+        repo = 'msyu'
+        name = 'msyu-logging-' + project.name
+        licenses = ['LGPL-3.0']
+        version {
+            name = project.version
+        }
+    }
+    publish = false
+}

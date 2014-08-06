@@ -1,3 +1,20 @@
+buildscript {
+    repositories {
+        maven { url 'http://dl.bintray.com/ypoluektovich/third-party' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jimdo.gradle:gradle-apt-plugin:0.5-patch.ypoluektovich.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
+    }
+}
+
+version = '0.1.0'
+
+apply plugin: 'apt'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
 sourceSets.main.java.srcDirs = ['src/main']
 sourceSets.test.java.srcDirs = ['src/test']
 
@@ -12,4 +29,38 @@ test {
     useTestNG {
         suites 'src/testng.xml'
     }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        main(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier 'sources'
+            }
+
+            artifactId = 'msyu-logging-' + project.name
+        }
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayKey
+    publications = ['main']
+    pkg {
+        userOrg = 'ypoluektovich'
+        repo = 'msyu'
+        name = 'msyu-logging-' + project.name
+        licenses = ['LGPL-3.0']
+        version {
+            name = project.version
+        }
+    }
+    publish = false
 }

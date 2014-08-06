@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        maven { url 'http://dl.bintray.com/ypoluektovich/third-party' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jimdo.gradle:gradle-apt-plugin:0.5-patch.ypoluektovich.1'
+    }
+}
+
+apply plugin: 'apt'
+
 sourceSets.main.java.srcDirs = ['src']
 
 dependencies {
