@@ -1,3 +1,41 @@
+import java.nio.file.Path
+import java.nio.file.Files
+
+class JavaAnnotationProcessorPlugin implements Plugin<Project> {
+    private static final Map<String, String> CONF_BY_TASK = [
+            'compileJava': 'apt',
+            'compileTestJava': 'testApt'
+    ]
+
+    @Override
+    void apply(Project project) {
+        project.gradle.beforeProject { Project p ->
+            CONF_BY_TASK.values().forEach { conf ->
+                p.configurations.create(conf)
+            }
+        }
+        project.gradle.afterProject { Project p ->
+            CONF_BY_TASK.forEach { taskName, confName ->
+                Path generatedSourcesRoot = p.buildDir.toPath().resolve('generated-sources')
+                p.getTasksByName(taskName, false).forEach { Task task ->
+                    Path generatedSourcesDir = generatedSourcesRoot.resolve(taskName)
+                    ((JavaCompile) task).configure {
+                        Configuration conf = p.configurations.getByName(confName)
+                        dependsOn conf
+                        options.compilerArgs += ['-processorpath', conf.join(System.getProperty('path.separator'))]
+                        options.compilerArgs += ['-s', generatedSourcesDir.toString()]
+                        doFirst {
+                            Files.createDirectories(generatedSourcesDir)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+apply plugin: JavaAnnotationProcessorPlugin
+
 subprojects {
     apply plugin: 'java'
 
