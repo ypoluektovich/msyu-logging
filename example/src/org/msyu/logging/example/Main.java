@@ -2,7 +2,6 @@ package org.msyu.logging.example;
 
 import org.msyu.logging.LogFactory;
 import org.msyu.logging.PreserveParameterNames;
-import org.msyu.logging.SystemOutLogBackend;
 
 public class Main {
 
@@ -13,7 +12,7 @@ public class Main {
 		void inner(int value);
 	}
 
-	private static final Log log = new LogFactory(new SystemOutLogBackend()).createLogFor(Log.class);
+	private static final Log log = LogFactory.getDefault().createLogFor(Log.class);
 
 	public static void main(String[] args) {
 		processOuter(3);
