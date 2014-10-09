@@ -2,5 +2,7 @@ rootProject.name = 'logging'
 
 include 'annotation'
 include 'processor'
+include 'spi'
 include 'runtime'
+include 'over-slf4j'
 include 'example'

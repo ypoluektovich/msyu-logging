@@ -2,6 +2,7 @@ package org.msyu.logging.example;
 
 import org.msyu.logging.LogFactory;
 import org.msyu.logging.PreserveParameterNames;
+import org.msyu.logging.Slf4jLogBackend;
 
 public class Main {
 
@@ -10,6 +11,10 @@ public class Main {
 		void outerStart(int count);
 		void innerStart(int outer, int count);
 		void inner(int value);
+	}
+
+	static {
+		LogFactory.setDefaultBackend(new Slf4jLogBackend());
 	}
 
 	private static final Log log = LogFactory.getDefault().createLogFor(Log.class);

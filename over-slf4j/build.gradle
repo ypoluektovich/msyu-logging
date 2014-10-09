@@ -1,35 +1,23 @@
 buildscript {
     repositories {
-        maven { url 'http://dl.bintray.com/ypoluektovich/third-party' }
         jcenter()
     }
     dependencies {
-        classpath 'com.jimdo.gradle:gradle-apt-plugin:0.5-patch.ypoluektovich.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
     }
 }
 
-version = '0.1.2'
+version = '0.1.0'
 
-apply plugin: 'apt'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-sourceSets.main.java.srcDirs = ['src/main']
-sourceSets.test.java.srcDirs = ['src/test']
+sourceSets.main.java.srcDirs = ['src/java']
+sourceSets.main.resources.srcDirs = ['src/resources']
 
 dependencies {
-    compile project(':annotation')
     compile project(':spi')
-    testCompile 'org.testng:testng:6.8.+'
-    testCompile 'org.mockito:mockito-core:1.9.+'
-    testApt project(':processor')
-}
-
-test {
-    useTestNG {
-        suites 'src/testng.xml'
-    }
+    compile 'org.slf4j:slf4j-api:1.7.+'
 }
 
 task sourceJar(type: Jar) {
