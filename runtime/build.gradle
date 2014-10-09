@@ -27,9 +27,9 @@ dependencies {
 }
 
 test {
-    useTestNG {
-        suites 'src/testng.xml'
-    }
+    useTestNG()
+    options.suites 'src/testng.xml'
+    scanForTestClasses = false
 }
 
 task sourceJar(type: Jar) {

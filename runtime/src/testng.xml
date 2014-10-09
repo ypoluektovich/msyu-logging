@@ -10,4 +10,9 @@
             <class name="org.msyu.logging.ParameterPreservationTest"/>
         </classes>
     </test>
+    <test name="support of methods from superinterfaces">
+        <classes>
+            <class name="org.msyu.logging.InheritanceTest"/>
+        </classes>
+    </test>
 </suite>
