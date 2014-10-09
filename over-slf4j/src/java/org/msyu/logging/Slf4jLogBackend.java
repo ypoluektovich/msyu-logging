@@ -6,7 +6,7 @@ public class Slf4jLogBackend implements LogBackend {
 
 	@Override
 	public void record(String className, String methodName, String[] parameterNames, Object[] arguments) {
-		StringBuilder sb = new StringBuilder(methodName);
+		StringBuilder sb = new StringBuilder(methodName).append(" ");
 		for (int i = 0; i < parameterNames.length; ++i) {
 			if (i != 0) {
 				sb.append(", ");
