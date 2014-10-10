@@ -11,6 +11,7 @@ public class Main {
 		void outerStart(int count);
 		void innerStart(int outer, int count);
 		void inner(int value);
+		void end();
 	}
 
 	static {
@@ -21,6 +22,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		processOuter(3);
+		log.end();
 	}
 
 	private static void processOuter(int count) {
