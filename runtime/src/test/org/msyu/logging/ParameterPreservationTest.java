@@ -50,7 +50,9 @@ public class ParameterPreservationTest {
 		Mockito.verify(backend).record(
 				Matchers.eq(logInterface.getName()),
 				Matchers.eq("method"),
-				AdditionalMatchers.aryEq(new String[]{expectedParameterName}),
+				AdditionalMatchers.aryEq(new MethodParameterInfo[]{
+						new MethodParameterInfo(expectedParameterName, Object.class)
+				}),
 				AdditionalMatchers.aryEq(new Object[]{null})
 		);
 	}

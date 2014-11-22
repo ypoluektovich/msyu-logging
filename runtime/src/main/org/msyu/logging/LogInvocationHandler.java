@@ -29,7 +29,7 @@ final class LogInvocationHandler implements InvocationHandler {
 
 	private final LogBackend backend;
 
-	private final ConcurrentMap<Method, String[]> argumentNamesByMethod = new ConcurrentHashMap<>();
+	private final ConcurrentMap<Method, MethodParameterInfo[]> parameterInfosByMethod = new ConcurrentHashMap<>();
 
 	LogInvocationHandler(Class<?> logInterface, LogBackend backend) {
 		this.logInterface = logInterface;
@@ -42,9 +42,9 @@ final class LogInvocationHandler implements InvocationHandler {
 			backend.record(
 					logInterface.getName(),
 					method.getName(),
-					argumentNamesByMethod.computeIfAbsent(
+					parameterInfosByMethod.computeIfAbsent(
 							logInterface.getMethod(method.getName(), method.getParameterTypes()),
-							this::getParameterNames
+							this::getParameterInfos
 					),
 					args
 			);
@@ -52,6 +52,16 @@ final class LogInvocationHandler implements InvocationHandler {
 			// why are we being asked to log something that we weren't created for?
 		}
 		return RETURN_VALUES.get(method.getReturnType());
+	}
+
+	private MethodParameterInfo[] getParameterInfos(Method method) {
+		String[] names = getParameterNames(method);
+		Class<?>[] types = method.getParameterTypes();
+		MethodParameterInfo[] infos = new MethodParameterInfo[names.length];
+		for (int i = 0; i < names.length; ++i) {
+			infos[i] = new MethodParameterInfo(names[i], types[i]);
+		}
+		return infos;
 	}
 
 	private String[] getParameterNames(Method method) {

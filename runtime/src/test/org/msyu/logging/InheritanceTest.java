@@ -30,14 +30,14 @@ public class InheritanceTest {
 	@Test
 	public void testA() {
 		log.a();
-		Mockito.verify(backend).record(any(), eq("a"), any(String[].class), any(Object[].class));
+		Mockito.verify(backend).record(any(), eq("a"), any(MethodParameterInfo[].class), any(Object[].class));
 		Mockito.verifyNoMoreInteractions(backend);
 	}
 
 	@Test
 	public void testB() {
 		log.b();
-		Mockito.verify(backend).record(any(), eq("b"), any(String[].class), any(Object[].class));
+		Mockito.verify(backend).record(any(), eq("b"), any(MethodParameterInfo[].class), any(Object[].class));
 		Mockito.verifyNoMoreInteractions(backend);
 	}
 
